@@ -232,3 +232,14 @@ section-order = [
     "F401",
     "F403",
 ]
+
+[tool.yardang]
+title = "fsspec-opfs"
+root = "README.md"
+pages = [
+    "docs/src/browser.md",
+    "docs/src/api.md",
+    "docs/src/storage.md",
+    "docs/src/development.md",
+]
+use-autoapi = false

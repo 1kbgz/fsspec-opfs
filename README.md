@@ -5,6 +5,13 @@ The Rust crate implements `fsspec_rs::AsyncFileSystem` and `AsyncFsFile` for
 `wasm32-unknown-unknown`. The JavaScript package exposes the same backend with
 TypeScript declarations.
 
+## Documentation
+
+- [How to read and write browser files](docs/src/browser.md)
+- [JavaScript and Rust API](docs/src/api.md)
+- [Browser storage and write behavior](docs/src/storage.md)
+- [How to build and test changes](docs/src/development.md)
+
 ## JavaScript
 
 ```typescript
@@ -51,7 +58,7 @@ fsspec_opfs = "0.1"
 fsspec_rs = { version = "0.4.1", default-features = false }
 ```
 
-```rust,ignore
+```rust
 use fsspec_opfs::Opfs;
 use fsspec_rs::AsyncFileSystem;
 
