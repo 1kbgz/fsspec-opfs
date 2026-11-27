@@ -69,4 +69,8 @@ Browser exports are available for `wasm32-unknown-unknown`:
 
 Browser futures run on the owning JavaScript event loop and may be non-`Send`. Configure `fsspec_rs` with `default-features = false`; native Tokio runtime adapters are not used.
 
-The native Python package contains browser assets and version metadata. It does not register an OPFS filesystem for native Python.
+## Python
+
+`OPFSFileSystem` implements `fsspec.AbstractFileSystem` and is registered under `opfs`. It provides `open`, `info`, `ls`, `mkdir`, `makedirs`, `rmdir`, `rm_file`, `rm`, `cp_file`, and `cat_file`, plus fsspec's derived operations. `local_root` is the native fallback directory or `None` in the browser. `close()` frees browser state or removes the native directory; the filesystem also supports a context manager.
+
+Browser `open` supports read and replacement write modes, including text wrappers. Native fallback uses local file modes. Browser operations require Pyodide JSPI and a registered `fsspec_opfs_js` module; [Python setup](python.md) describes the entry point and module registration. Browser setup errors never trigger native fallback.

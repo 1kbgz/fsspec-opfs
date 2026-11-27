@@ -31,7 +31,10 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 
-dependencies = []
+dependencies = ["fsspec>=2025.3.0"]
+
+[project.entry-points."fsspec.specs"]
+opfs = "fsspec_opfs:OPFSFileSystem"
 
 [project.optional-dependencies]
 develop = [
@@ -168,6 +171,7 @@ packages = [
     "fsspec_opfs",
     "js",
     "rust",
+    "scripts",
     "Cargo.toml",
     "Cargo.lock",
 ]
@@ -238,6 +242,7 @@ title = "fsspec-opfs"
 root = "README.md"
 pages = [
     "docs/src/browser.md",
+    "docs/src/python.md",
     "docs/src/api.md",
     "docs/src/storage.md",
     "docs/src/development.md",

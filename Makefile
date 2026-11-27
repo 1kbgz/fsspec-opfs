@@ -45,8 +45,8 @@ install:  ## install python library
 #########
 .PHONY: lint-py lint-js lint-rs lint-docs lint lints
 lint-py:  ## run python linter with ruff
-	python -m ruff check fsspec_opfs
-	python -m ruff format --check fsspec_opfs
+	python -m ruff check fsspec_opfs scripts
+	python -m ruff format --check fsspec_opfs scripts
 
 lint-js:  ## run js linter
 	cd js; pnpm lint
@@ -65,8 +65,8 @@ lints: lint
 
 .PHONY: fix-py fix-js fix-rs fix-docs fix format
 fix-py:  ## fix python formatting with ruff
-	python -m ruff check --fix fsspec_opfs
-	python -m ruff format fsspec_opfs
+	python -m ruff check --fix fsspec_opfs scripts
+	python -m ruff format fsspec_opfs scripts
 
 fix-js:  ## fix js formatting
 	cd js; pnpm fix
@@ -159,10 +159,13 @@ major:  ## bump a major version
 ########
 # DIST #
 ########
-.PHONY: dist-py-wheel dist-py-sdist dist-rs dist-check dist publish
+.PHONY: dist-py-wheel dist-py-browser dist-py-sdist dist-rs dist-check dist publish
 
 dist-py-wheel:  ## build python wheel
 	python -m cibuildwheel --output-dir dist
+
+dist-py-browser: build-js  ## build pure Python wheel with browser assets
+	python scripts/build_browser_wheel.py
 
 dist-py-sdist:  ## build python sdist
 	python -m build --sdist -o dist
