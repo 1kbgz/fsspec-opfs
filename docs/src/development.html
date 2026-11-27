@@ -82,6 +82,11 @@
     </a>
   </li>
   <li class="fd-tree-item">
+    <a class="fd-link" href="python.html">
+      <span class="fd-link-text">How to use OPFS from Python</span>
+    </a>
+  </li>
+  <li class="fd-tree-item">
     <a class="fd-link" href="api.html">
       <span class="fd-link-text">JavaScript and Rust API</span>
     </a>
@@ -143,10 +148,11 @@ pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </sp
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>setup
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>build
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium
-pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>test:js
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>build<span class="w"> </span>hatchling<span class="w"> </span>hatch-js<span class="w"> </span>hatch-rs<span class="w"> </span>fsspec
+pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 </div>
-<p>The browser suite serves the built assets locally and exercises real OPFS in Chromium. Rebuild after changing Rust or TypeScript source. <code class="docutils literal notranslate"><span class="pre">js/dist/pkg</span></code> contains the WASM binary and browser support code; <code class="docutils literal notranslate"><span class="pre">js/dist/esm</span></code> and <code class="docutils literal notranslate"><span class="pre">js/dist/cdn</span></code> contain JavaScript entry points.</p>
+<p>The browser suite serves the built assets locally and exercises real OPFS in Chromium, including Python fsspec calls in Pyodide. Test preparation builds the pure Python wheel and copies the installed fsspec sources so the browser tests run without downloading Python packages. Rebuild after changing Rust or TypeScript source. <code class="docutils literal notranslate"><span class="pre">js/dist/pkg</span></code> contains the WASM binary and browser support code; <code class="docutils literal notranslate"><span class="pre">js/dist/esm</span></code> and <code class="docutils literal notranslate"><span class="pre">js/dist/cdn</span></code> contain JavaScript entry points.</p>
 </section>
 <section id="run-rust-checks">
 <h2>Run Rust checks<a class="headerlink" href="#run-rust-checks" title="Link to this heading">¶</a></h2>
@@ -167,7 +173,7 @@ make<span class="w"> </span>lint-docs
 python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8001</span><span class="w"> </span>--directory<span class="w"> </span>docs/html
 </pre></div>
 </div>
-<p>Open <code class="docutils literal notranslate"><span class="pre">http://localhost:8001</span></code> to inspect the generated site. Documentation sources are listed in <code class="docutils literal notranslate"><span class="pre">[tool.yardang]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. The API pages describe browser Rust and JavaScript APIs, so Python auto-API generation is disabled and a native extension build is unnecessary for a local docs build.</p>
+<p>Open <code class="docutils literal notranslate"><span class="pre">http://localhost:8001</span></code> to inspect the generated site. Documentation sources are listed in <code class="docutils literal notranslate"><span class="pre">[tool.yardang]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. The API pages are maintained manually, so Python auto-API generation is disabled and a native extension build is unnecessary for a local docs build.</p>
 <p>After a successful main-branch build, the template’s Publish Docs workflow publishes <code class="docutils literal notranslate"><span class="pre">docs/html</span></code> to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>. GitHub Pages must use the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch root as its publishing source. A manual workflow dispatch builds the Markdown documentation directly.</p>
 </section>
 </section>

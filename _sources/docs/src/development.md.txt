@@ -10,10 +10,11 @@ pnpm --dir js install --frozen-lockfile
 pnpm --dir js setup
 pnpm --dir js build
 pnpm --dir js exec playwright install chromium
-pnpm --dir js test:js
+python -m pip install build hatchling hatch-js hatch-rs fsspec
+pnpm --dir js test
 ```
 
-The browser suite serves the built assets locally and exercises real OPFS in Chromium. Rebuild after changing Rust or TypeScript source. `js/dist/pkg` contains the WASM binary and browser support code; `js/dist/esm` and `js/dist/cdn` contain JavaScript entry points.
+The browser suite serves the built assets locally and exercises real OPFS in Chromium, including Python fsspec calls in Pyodide. Test preparation builds the pure Python wheel and copies the installed fsspec sources so the browser tests run without downloading Python packages. Rebuild after changing Rust or TypeScript source. `js/dist/pkg` contains the WASM binary and browser support code; `js/dist/esm` and `js/dist/cdn` contain JavaScript entry points.
 
 ## Run Rust checks
 
@@ -37,6 +38,6 @@ make lint-docs
 python -m http.server 8001 --directory docs/html
 ```
 
-Open `http://localhost:8001` to inspect the generated site. Documentation sources are listed in `[tool.yardang]` in `pyproject.toml`. The API pages describe browser Rust and JavaScript APIs, so Python auto-API generation is disabled and a native extension build is unnecessary for a local docs build.
+Open `http://localhost:8001` to inspect the generated site. Documentation sources are listed in `[tool.yardang]` in `pyproject.toml`. The API pages are maintained manually, so Python auto-API generation is disabled and a native extension build is unnecessary for a local docs build.
 
 After a successful main-branch build, the template's Publish Docs workflow publishes `docs/html` to `gh-pages`. GitHub Pages must use the `gh-pages` branch root as its publishing source. A manual workflow dispatch builds the Markdown documentation directly.

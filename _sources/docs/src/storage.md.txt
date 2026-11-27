@@ -2,7 +2,7 @@
 
 OPFS gives a web application a private filesystem managed by the browser. The root belongs to the current origin and browser profile, so another origin or profile has different files. OPFS does not expose arbitrary files from the user's operating system.
 
-The Rust implementation calls browser APIs through WebAssembly. JavaScript and Rust callers use the same async operations. Blocking file handles are unsupported because browser I/O completes through the JavaScript event loop. Native Python distributions package the browser assets; installing the Python package does not grant access to a browser profile's files.
+The Rust implementation calls browser APIs through WebAssembly. JavaScript and Rust callers use the same async operations. Blocking Rust file handles are unsupported because browser I/O completes through the JavaScript event loop. The Python adapter uses Pyodide's JSPI support to suspend synchronous fsspec calls while that event loop processes I/O. On a server it warns and uses a temporary local directory; it cannot access a browser profile's files.
 
 ## Why writes require commit
 

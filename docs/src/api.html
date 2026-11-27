@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Browser storage and write behavior" href="storage.html" />
-    <link rel="prev" title="How to read and write browser files" href="browser.html" />
+    <link rel="prev" title="How to use OPFS from Python" href="python.html" />
     <script>
       (function () {
         var root = document.documentElement;
@@ -80,6 +80,11 @@
   <li class="fd-tree-item">
     <a class="fd-link" href="browser.html">
       <span class="fd-link-text">How to read and write browser files</span>
+    </a>
+  </li>
+  <li class="fd-tree-item">
+    <a class="fd-link" href="python.html">
+      <span class="fd-link-text">How to use OPFS from Python</span>
     </a>
   </li>
   <li class="fd-tree-item">
@@ -138,6 +143,9 @@
   </li>
   <li class="fd-toc-item" data-depth="1">
     <a href="#rust">Rust</a>
+  </li>
+  <li class="fd-toc-item" data-depth="1">
+    <a href="#python">Python</a>
   </li>
 </ul>
 </div>
@@ -288,18 +296,22 @@
 </table>
 <p><code class="docutils literal notranslate"><span class="pre">Opfs</span></code> implements <code class="docutils literal notranslate"><span class="pre">fsspec_rs::AsyncFileSystem</span></code>, including <code class="docutils literal notranslate"><span class="pre">ls</span></code>, <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">mkdir</span></code>, <code class="docutils literal notranslate"><span class="pre">rmdir</span></code>, <code class="docutils literal notranslate"><span class="pre">rm_file</span></code>, <code class="docutils literal notranslate"><span class="pre">cp_file</span></code>, <code class="docutils literal notranslate"><span class="pre">cat_file</span></code>, and <code class="docutils literal notranslate"><span class="pre">pipe_file</span></code>. <code class="docutils literal notranslate"><span class="pre">open_async</span></code> returns <code class="docutils literal notranslate"><span class="pre">Box&lt;dyn</span> <span class="pre">AsyncFsFile&gt;</span></code> with <code class="docutils literal notranslate"><span class="pre">read</span></code>, <code class="docutils literal notranslate"><span class="pre">seek</span></code>, <code class="docutils literal notranslate"><span class="pre">info</span></code>, and <code class="docutils literal notranslate"><span class="pre">close</span></code>. The legacy <code class="docutils literal notranslate"><span class="pre">open</span></code> method returns <code class="docutils literal notranslate"><span class="pre">NotSupported</span></code> because it requires a blocking file handle.</p>
 <p>Browser futures run on the owning JavaScript event loop and may be non-<code class="docutils literal notranslate"><span class="pre">Send</span></code>. Configure <code class="docutils literal notranslate"><span class="pre">fsspec_rs</span></code> with <code class="docutils literal notranslate"><span class="pre">default-features</span> <span class="pre">=</span> <span class="pre">false</span></code>; native Tokio runtime adapters are not used.</p>
-<p>The native Python package contains browser assets and version metadata. It does not register an OPFS filesystem for native Python.</p>
+</section>
+<section id="python">
+<h2>Python<a class="headerlink" href="#python" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">OPFSFileSystem</span></code> implements <code class="docutils literal notranslate"><span class="pre">fsspec.AbstractFileSystem</span></code> and is registered under <code class="docutils literal notranslate"><span class="pre">opfs</span></code>. It provides <code class="docutils literal notranslate"><span class="pre">open</span></code>, <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">ls</span></code>, <code class="docutils literal notranslate"><span class="pre">mkdir</span></code>, <code class="docutils literal notranslate"><span class="pre">makedirs</span></code>, <code class="docutils literal notranslate"><span class="pre">rmdir</span></code>, <code class="docutils literal notranslate"><span class="pre">rm_file</span></code>, <code class="docutils literal notranslate"><span class="pre">rm</span></code>, <code class="docutils literal notranslate"><span class="pre">cp_file</span></code>, and <code class="docutils literal notranslate"><span class="pre">cat_file</span></code>, plus fsspec’s derived operations. <code class="docutils literal notranslate"><span class="pre">local_root</span></code> is the native fallback directory or <code class="docutils literal notranslate"><span class="pre">None</span></code> in the browser. <code class="docutils literal notranslate"><span class="pre">close()</span></code> frees browser state or removes the native directory; the filesystem also supports a context manager.</p>
+<p>Browser <code class="docutils literal notranslate"><span class="pre">open</span></code> supports read and replacement write modes, including text wrappers. Native fallback uses local file modes. Browser operations require Pyodide JSPI and a registered <code class="docutils literal notranslate"><span class="pre">fsspec_opfs_js</span></code> module; <a class="reference internal" href="python.html"><span class="std std-doc">Python setup</span></a> describes the entry point and module registration. Browser setup errors never trigger native fallback.</p>
 </section>
 </section>
 
 
       </div>
 <nav class="fd-pagination" aria-label="Pagination">
-  <a class="fd-pagination-card fd-pagination-prev" href="browser.html" title="Previous: How to read and write browser files">
+  <a class="fd-pagination-card fd-pagination-prev" href="python.html" title="Previous: How to use OPFS from Python">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="fd-icon "><path d="m15 18-6-6 6-6"/></svg>
     <span class="fd-pagination-text">
       <span class="fd-pagination-label">Previous</span>
-      <span class="fd-pagination-title">How to read and write browser files</span>
+      <span class="fd-pagination-title">How to use OPFS from Python</span>
     </span>
   </a>
   <a class="fd-pagination-card fd-pagination-next" href="storage.html" title="Next: Browser storage and write behavior">
@@ -345,6 +357,9 @@
   </li>
   <li class="fd-toc-item" data-depth="1">
     <a href="#rust">Rust</a>
+  </li>
+  <li class="fd-toc-item" data-depth="1">
+    <a href="#python">Python</a>
   </li>
 </ul>
 

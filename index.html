@@ -82,6 +82,11 @@
     </a>
   </li>
   <li class="fd-tree-item">
+    <a class="fd-link" href="docs/src/python.html">
+      <span class="fd-link-text">How to use OPFS from Python</span>
+    </a>
+  </li>
+  <li class="fd-tree-item">
     <a class="fd-link" href="docs/src/api.html">
       <span class="fd-link-text">JavaScript and Rust API</span>
     </a>
@@ -151,6 +156,7 @@ TypeScript declarations.</p>
 <h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="docs/src/browser.html"><span class="std std-doc">How to read and write browser files</span></a></p></li>
+<li><p><a class="reference internal" href="docs/src/python.html"><span class="std std-doc">How to use OPFS from Python</span></a></p></li>
 <li><p><a class="reference internal" href="docs/src/api.html"><span class="std std-doc">JavaScript and Rust API</span></a></p></li>
 <li><p><a class="reference internal" href="docs/src/storage.html"><span class="std std-doc">Browser storage and write behavior</span></a></p></li>
 <li><p><a class="reference internal" href="docs/src/development.html"><span class="std std-doc">How to build and test changes</span></a></p></li>
@@ -208,8 +214,10 @@ directory so the WASM URL resolves. The CDN entry is an ES module.</p>
 <span class="kd">let</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">cat_file</span><span class="p">(</span><span class="s">"tables/example"</span><span class="p">,</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="nb">None</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The crate is browser-only. Native Python distributions contain browser assets;
-they do not provide native Python access to OPFS. Blocking filesystem handles,
+<p>The crate is browser-only. The Python adapter registers <code class="docutils literal notranslate"><span class="pre">opfs</span></code> with fsspec: in
+Pyodide it uses this browser backend through JSPI; native Python warns and uses
+an isolated temporary local directory. See the <a class="reference internal" href="docs/src/python.html"><span class="std std-doc">Python setup guide</span></a>.
+Blocking Rust filesystem handles,
 worker-only synchronous access handles, and registry integration are not provided.</p>
 </section>
 <section id="write-behavior-and-storage-lifetime">
@@ -235,6 +243,7 @@ remove them. Applications needing persistence should request it through
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>install
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>setup
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>build<span class="w"> </span>hatchling<span class="w"> </span>hatch-js<span class="w"> </span>hatch-rs<span class="w"> </span>fsspec
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>build
 pnpm<span class="w"> </span>--dir<span class="w"> </span>js<span class="w"> </span>test:js
 cargo<span class="w"> </span>clippy<span class="w"> </span>-p<span class="w"> </span>fsspec_opfs<span class="w"> </span>-p<span class="w"> </span>fsspec_opfs_js<span class="w"> </span>--target<span class="w"> </span>wasm32-unknown-unknown<span class="w"> </span>--<span class="w"> </span>-D<span class="w"> </span>warnings

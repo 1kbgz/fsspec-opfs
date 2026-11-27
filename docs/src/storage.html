@@ -83,6 +83,11 @@
     </a>
   </li>
   <li class="fd-tree-item">
+    <a class="fd-link" href="python.html">
+      <span class="fd-link-text">How to use OPFS from Python</span>
+    </a>
+  </li>
+  <li class="fd-tree-item">
     <a class="fd-link" href="api.html">
       <span class="fd-link-text">JavaScript and Rust API</span>
     </a>
@@ -134,7 +139,7 @@
   <section class="tex2jax_ignore mathjax_ignore" id="browser-storage-and-write-behavior">
 <h1>Browser storage and write behavior<a class="headerlink" href="#browser-storage-and-write-behavior" title="Link to this heading">¶</a></h1>
 <p>OPFS gives a web application a private filesystem managed by the browser. The root belongs to the current origin and browser profile, so another origin or profile has different files. OPFS does not expose arbitrary files from the user’s operating system.</p>
-<p>The Rust implementation calls browser APIs through WebAssembly. JavaScript and Rust callers use the same async operations. Blocking file handles are unsupported because browser I/O completes through the JavaScript event loop. Native Python distributions package the browser assets; installing the Python package does not grant access to a browser profile’s files.</p>
+<p>The Rust implementation calls browser APIs through WebAssembly. JavaScript and Rust callers use the same async operations. Blocking Rust file handles are unsupported because browser I/O completes through the JavaScript event loop. The Python adapter uses Pyodide’s JSPI support to suspend synchronous fsspec calls while that event loop processes I/O. On a server it warns and uses a temporary local directory; it cannot access a browser profile’s files.</p>
 <section id="why-writes-require-commit">
 <h2>Why writes require commit<a class="headerlink" href="#why-writes-require-commit" title="Link to this heading">¶</a></h2>
 <p>A writer uses the browser’s writable file stream to prepare replacement bytes. Commit closes that stream and publishes the replacement. Aborting or dropping an unfinished writer discards the replacement, preserving the previous contents of an existing file.</p>
