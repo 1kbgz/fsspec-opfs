@@ -8,6 +8,7 @@ TypeScript declarations.
 ## Documentation
 
 - [How to read and write browser files](docs/src/browser.md)
+- [How to use OPFS from Python](docs/src/python.md)
 - [JavaScript and Rust API](docs/src/api.md)
 - [Browser storage and write behavior](docs/src/storage.md)
 - [How to build and test changes](docs/src/development.md)
@@ -68,8 +69,10 @@ fs.pipe_file("tables/example", &[1, 2, 3]).await?;
 let bytes = fs.cat_file("tables/example", None, None).await?;
 ```
 
-The crate is browser-only. Native Python distributions contain browser assets;
-they do not provide native Python access to OPFS. Blocking filesystem handles,
+The crate is browser-only. The Python adapter registers `opfs` with fsspec: in
+Pyodide it uses this browser backend through JSPI; native Python warns and uses
+an isolated temporary local directory. See the [Python setup guide](docs/src/python.md).
+Blocking Rust filesystem handles,
 worker-only synchronous access handles, and registry integration are not provided.
 
 ## Write behavior and storage lifetime
@@ -98,6 +101,7 @@ rustup target add wasm32-unknown-unknown
 pnpm --dir js install
 pnpm --dir js setup
 pnpm --dir js exec playwright install chromium
+python -m pip install build hatchling hatch-js hatch-rs fsspec
 pnpm --dir js build
 pnpm --dir js test:js
 cargo clippy -p fsspec_opfs -p fsspec_opfs_js --target wasm32-unknown-unknown -- -D warnings
