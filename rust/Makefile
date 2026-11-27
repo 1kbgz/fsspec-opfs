@@ -3,6 +3,8 @@
 requirements:  ## install required dev dependencies
 	rustup component add rustfmt
 	rustup component add clippy
+	cargo install --locked cargo-nextest
+	cargo install --locked cargo-llvm-cov
 	cargo install --locked wasm-bindgen-cli --version 0.2.130
 	rustup target add wasm32-unknown-unknown
 
@@ -33,12 +35,13 @@ checks: check
 
 .PHONY: test tests test-ci tests-ci
 test:  ## run the tests
-	cargo test
+	cargo llvm-cov nextest --cobertura --output-path coverage.xml
 
 # alias
 tests: test
 
-coverage: test  ## Browser behavior is exercised by the JavaScript tests
+coverage:
+	cargo llvm-cov nextest --lcov --output-path coverage
 
 .PHONY: dist publish
 dist:  ## create dist

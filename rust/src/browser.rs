@@ -59,20 +59,7 @@ fn browser_error(error: JsValue) -> FsError {
 }
 
 fn path(path: &str) -> FsResult<String> {
-    let path = path
-        .strip_prefix("opfs://")
-        .unwrap_or(path)
-        .trim_matches('/');
-    if path.contains(['\\', '\0']) || path.split('/').any(|p| p == "." || p == "..") {
-        return Err(FsError::InvalidArgument(
-            "OPFS paths cannot contain dot components, backslashes, or NUL".into(),
-        ));
-    }
-    Ok(path
-        .split('/')
-        .filter(|p| !p.is_empty())
-        .collect::<Vec<_>>()
-        .join("/"))
+    crate::path::normalize(path).map_err(|message| FsError::InvalidArgument(message.into()))
 }
 
 fn metadata(value: JsValue) -> FileInfo {
