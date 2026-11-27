@@ -1,0 +1,19 @@
+[package]
+name = "fsspec_opfs_js"
+version = "0.1.0"
+edition = "2021"
+publish = false
+keywords = ["experimental"]
+include = ["src/**/*", "Cargo.toml", "package.json"]
+
+[lib]
+name = "fsspec_opfs"
+path = "src/rust/lib.rs"
+crate-type = ["cdylib"]
+
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
+fsspec_opfs = { path = "../rust", version = "*" }
+wasm-bindgen = "=0.2.130"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+fsspec_rs = { version = "0.4.1", default-features = false }

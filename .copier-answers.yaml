@@ -1,0 +1,13 @@
+# Changes here will be overwritten by Copier
+_commit: 25346a4
+_src_path: https://github.com/python-project-templates/base
+add_docs: false
+add_extension: rustjswasm
+add_pyodide: false
+add_wiki: false
+email: dev@1kbgz.com
+github: 1kbgz
+project_description: Origin Private File System backend for fsspec-rs
+project_name: fsspec-opfs
+python_version_primary: '3.11'
+team: the fsspec-opfs authors
